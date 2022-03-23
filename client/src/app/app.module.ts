@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 /* Angular Components */
 import { AppComponent } from './app.component';
@@ -16,18 +16,24 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDialogModule } from '@angular/material/dialog';
+import { TodoListComponent } from './todo-list/todo-list.component';
+import { MatCardModule } from "@angular/material/card";
+import { MatListModule } from "@angular/material/list";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    FormCreateComponent
+    FormCreateComponent,
+    TodoListComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
 
     /* Angular Material Modules */
     MatToolbarModule,
@@ -37,6 +43,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
+    MatCardModule,
+    MatListModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
