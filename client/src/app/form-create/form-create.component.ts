@@ -1,7 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {NavbarComponent} from '../navbar/navbar.component';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { IProject } from './../types';
+import { ProjectApiService } from '../services/ProjectApi/project-api.service';
+import { ProjectsService } from '../services/Projects/projects.service';
 
 @Component({
   selector: 'app-form-create',
@@ -17,9 +20,11 @@ export class FormCreateComponent implements OnInit {
   loading = false;
 
   constructor(
+    private projectApiService: ProjectApiService,
+    private projectsService: ProjectsService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<NavbarComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, /* ПОМЕНЯТЬ ТИП */
+    @Inject(MAT_DIALOG_DATA) public data: {projects: IProject[]},
   ) {
     this.createForm = this.formBuilder.group({
       text: this.textFormControl,
@@ -28,7 +33,7 @@ export class FormCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createForm.valueChanges.subscribe(console.log);
+    this.createForm.valueChanges;
   }
 
   getErrorMessage(control: FormControl) {
@@ -46,9 +51,22 @@ export class FormCreateComponent implements OnInit {
   submitHandler() {
     this.loading = true;
 
+    const projectId = this.createForm.value.projectId;
+
+    const todo = {
+      text: this.createForm.value.text,
+      isCompleted: false
+    }
+
     try {
-      /*Запрос на создание*/
-      this.closeCreateDialog();
+      this.projectApiService.createTodo(projectId, todo)
+        .subscribe(res => {
+          if (res.status === 201 && res.body) {
+            const todo = res.body;
+            this.data.projects.map(project => project.id === projectId ? project.todos.push(todo) : project);
+            this.closeCreateDialog();
+          }
+        });
     } catch (e) {
       console.log(e);
     }

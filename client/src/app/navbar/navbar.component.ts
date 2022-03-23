@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 import { FormCreateComponent } from '../form-create/form-create.component';
+import { IProject } from './../types';
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +11,7 @@ import { FormCreateComponent } from '../form-create/form-create.component';
 })
 export class NavbarComponent implements OnInit {
 
-  @Input() projectList: any = [
-    { id: 1, title: "Семья" },
-    { id: 2, title: "Работа" },
-    { id: 3, title: "Прочее" }
-  ]
+  @Input() projectList: IProject[] = [];
 
   constructor(public dialog: MatDialog) { }
 

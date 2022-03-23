@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProjectApiService } from '../services/ProjectApi/project-api.service';
+import { IProject } from './../types';
 
 @Component({
   selector: 'app-todo-list',
@@ -7,34 +9,19 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TodoListComponent implements OnInit {
 
-  @Input() projectList: any = [
-    { id: 1, title: "Семья", todos: [
-        {id: 1, text: "Задача 1", isCompleted: false},
-        {id: 2, text: "Задача 2", isCompleted: true},
-        {id: 3, text: "Задача 3", isCompleted: false}
-      ]
-    },
-    { id: 2, title: "Работа", todos: [
-        {id: 4, text: "Задача 4", isCompleted: false},
-        {id: 5, text: "Задача 5", isCompleted: false},
-        {id: 6, text: "Задача 6", isCompleted: true}
-      ]
-    },
-    { id: 3, title: "Прочее", todos: [
-        {id: 7, text: "Задача 7", isCompleted: false},
-        {id: 8, text: "Задача 8", isCompleted: true},
-        {id: 9, text: "Задача 9", isCompleted: true}
-      ]
-    }
-  ]
+  @Input() projectList: IProject[] = [];
 
-  constructor() { }
+  constructor(private projectApiService: ProjectApiService) { }
 
   ngOnInit(): void {
   }
 
-  toggleCompletedTodo(projectId: number, todoId: number) {
-    /*Запрос на изменение*/
+  toggleCompletedTodo(event: any, projectId: number, todoId: number) {
+    this.projectApiService.updateTodo(projectId, todoId).subscribe(response => {
+      if (response.status !== 200) {
+        event.checked = !event.checked;
+      }
+    })
   }
 
 }

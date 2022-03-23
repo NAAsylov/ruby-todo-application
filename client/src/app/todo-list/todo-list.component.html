@@ -9,7 +9,7 @@
             <mat-checkbox
               color="primary"
               [(ngModel)]="todo.isCompleted"
-              (change)="toggleCompletedTodo(project.id, todo.id)"
+              (change)="toggleCompletedTodo($event, project.id, todo.id)"
             >
               {{todo.text}}
             </mat-checkbox>
