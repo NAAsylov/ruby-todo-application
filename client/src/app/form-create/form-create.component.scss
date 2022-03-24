@@ -1,0 +1,30 @@
+.form__create-title {
+  margin: 0 -16px;
+  border-bottom: 1px solid lightgray;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 0 16px 0;
+}
+
+.create-form-button-list {
+  display: flex;
+}
+
+.create-form-button {
+  width: 100%;
+}
+
+.create-form-button_cancel {
+  margin: 0 10px 0 0;
+}
+
+.mat-form-field-group {
+  padding: 20px 0;
+}
+
+.mat-form-field {
+  width: 100%;
+  font-weight: lighter;
+  font-size: 16px;
+}
