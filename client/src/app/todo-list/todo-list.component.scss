@@ -23,6 +23,17 @@ mat-checkbox {
   font-weight: lighter;
 }
 
+.mat-list-base .mat-list-item {
+  height: auto;
+  margin: 10px 0;
+}
+
+::ng-deep mat-checkbox .mat-checkbox-label {
+  display: block;
+  max-width: 300px;
+  white-space: pre-line;
+}
+
 .mat-checkbox-checked {
   text-decoration: line-through;
 }
@@ -40,7 +51,7 @@ mat-checkbox {
 }
 
 ::ng-deep mat-checkbox .mat-checkbox-layout {
-  align-items: center;
+  align-items: flex-start;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background {
