@@ -20,13 +20,15 @@ import { MatCardModule } from "@angular/material/card";
 import { MatListModule } from "@angular/material/list";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { FormCreateProjectComponent } from './form-create-project/form-create-project.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FormCreateComponent,
-    TodoListComponent
+    TodoListComponent,
+    FormCreateProjectComponent
   ],
   imports: [
     BrowserModule,

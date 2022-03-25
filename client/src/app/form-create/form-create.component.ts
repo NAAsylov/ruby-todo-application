@@ -1,9 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { ProjectsService } from '../services/projects.service'
+import { MatDialog } from '@angular/material/dialog';
 import { IProject, ITodoWithoutId } from "../types";
+import { FormCreateProjectComponent } from '../form-create-project/form-create-project.component';
 
 @Component({
   selector: 'app-form-create',
@@ -21,7 +23,8 @@ export class FormCreateComponent implements OnInit {
   constructor(
     private projectsService: ProjectsService,
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<NavbarComponent>
+    public dialogRef: MatDialogRef<NavbarComponent>,
+    public dialog: MatDialog
   ) {
     this.createForm = this.formBuilder.group({
       text: this.textFormControl,
@@ -31,6 +34,13 @@ export class FormCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.projects = this.projectsService.projects$.getValue();
+  }
+
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(FormCreateProjectComponent, {
+      width: '500px',
+      data: {},
+    });
   }
 
   submitHandler() {

@@ -15,6 +15,7 @@
         <mat-label>Категория</mat-label>
         <mat-select formControlName="projectId" placeholder="Категория">
           <mat-option *ngFor="let project of projects" value="{{project.id}}">{{project.title}}</mat-option>
+          <mat-option (click)="openCreateDialog()">Создать новую категорию</mat-option>
         </mat-select>
         <mat-error *ngIf="projectIdFormControl.invalid">{{getErrorMessage(projectIdFormControl)}}</mat-error>
       </mat-form-field>

@@ -23,6 +23,10 @@ export class ProjectsService {
       });
   }
 
+  addProject(title: number): void {
+    console.log(title);
+  }
+
   addTodo(projectId: number, newTodo: ITodoWithoutId): void {
     this.http.post<IResCreatedTodo>(`${this.ROOT_URL}/projects/${projectId}/todos`, newTodo, {observe: 'response'})
       .subscribe((res) => {
