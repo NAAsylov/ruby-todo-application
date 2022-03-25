@@ -19,4 +19,19 @@ class ProjectsController < ApplicationController
     render json: @result
   end
 
+  # POST /projects
+  def create
+    @project = Project.new(project_params)
+
+    if @project.save
+      render json: @project, status: :created
+    else
+      render json: @project.errors, status: :unprocessable_entity
+    end
+  end
+
+  def project_params
+    params[:project].permit(:title)
+  end
+
 end
