@@ -1,0 +1,18 @@
+<form [formGroup]="createFormProject" (ngSubmit)="submitHandler()">
+  <div class="form__create-title">
+    Новая категория
+  </div>
+  <div class="mat-form-field-group">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Название категории</mat-label>
+        <input matInput placeholder="Название категории" formControlName="title" required>
+        <mat-error *ngIf="titleFormControl.invalid">{{getErrorMessage(titleFormControl)}}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="create-form-button-list">
+    <button class="create-form-button create-form-button_cancel" mat-raised-button type="button" (click)="closeCreateDialog()">Отмена</button>
+    <button class="create-form-button create-form-button_ok" mat-raised-button color="primary" type="submit" [disabled]="createFormProject.invalid">Добавить</button>
+  </div>
+</form>

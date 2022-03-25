@@ -11,10 +11,10 @@ export class ProjectsService {
   readonly ROOT_URL;
 
   constructor(private http: HttpClient) {
-    this.ROOT_URL = 'http://localhost:8000'//'https://young-thicket-91125.herokuapp.com';
+    this.ROOT_URL = 'https://young-thicket-91125.herokuapp.com';
   }
 
-  projects$ = new BehaviorSubject<IProject[]>([])
+  projects$ = new BehaviorSubject<IProject[]>([]);
 
   loadProjects() {
     this.http.get<IProject[]>(`${this.ROOT_URL}/projects`, {observe: 'response'})

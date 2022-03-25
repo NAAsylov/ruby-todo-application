@@ -5,7 +5,6 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { ProjectsService } from '../services/projects.service'
 import { MatDialog } from '@angular/material/dialog';
 import { IProject, ITodoWithoutId } from "../types";
-import { FormCreateProjectComponent } from '../form-create-project/form-create-project.component';
 
 @Component({
   selector: 'app-form-create',
@@ -36,13 +35,6 @@ export class FormCreateComponent implements OnInit {
     this.projects = this.projectsService.projects$.getValue();
   }
 
-  openCreateDialog(): void {
-    const dialogRef = this.dialog.open(FormCreateProjectComponent, {
-      width: '500px',
-      data: {},
-    });
-  }
-
   submitHandler() {
     try {
       const projectsId = this.projectIdFormControl.value;
@@ -50,7 +42,7 @@ export class FormCreateComponent implements OnInit {
         text: this.textFormControl.value,
         isCompleted: false
       }
-      this.projectsService.addTodo(projectsId, newTodo)
+      this.projectsService.addTodo(projectsId, newTodo);
       this.closeCreateDialog();
     } catch (e) {
       console.log(e);
