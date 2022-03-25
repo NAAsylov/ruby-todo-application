@@ -31,6 +31,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
+    puts params
     params[:project].permit(:title)
   end
 

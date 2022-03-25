@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, map} from "rxjs";
-import { ITodo, ITodoWithoutId, IProject, IResCreatedTodo } from "../types";
+import { ITodo, ITodoWithoutId, IProject, IResCreatedTodo, IResCreatedProject } from "../types";
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
@@ -11,7 +11,7 @@ export class ProjectsService {
   readonly ROOT_URL;
 
   constructor(private http: HttpClient) {
-    this.ROOT_URL = 'https://young-thicket-91125.herokuapp.com';
+    this.ROOT_URL = 'http://localhost:8000'//'https://young-thicket-91125.herokuapp.com';
   }
 
   projects$ = new BehaviorSubject<IProject[]>([])
@@ -24,7 +24,20 @@ export class ProjectsService {
   }
 
   addProject(title: number): void {
-    console.log(title);
+    this.http.post<IResCreatedProject>(`${this.ROOT_URL}/projects`, { title }, {observe: 'response'})
+      .subscribe((res) => {
+        if (res.status === 201 && res.body) {
+          const createdProject = {
+            id: res.body.id,
+            title: res.body.title,
+            todos: []
+          }
+          const updatedProjects: IProject[] = this.projects$.getValue();
+          updatedProjects.push(createdProject);
+
+          this.projects$.next(updatedProjects);
+        }
+      });
   }
 
   addTodo(projectId: number, newTodo: ITodoWithoutId): void {
