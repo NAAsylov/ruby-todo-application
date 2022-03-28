@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, map} from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { ITodo, ITodoWithoutId, IProject, IResCreatedTodo, IResCreatedProject } from "../types";
 import { HttpClient } from "@angular/common/http";
 
@@ -23,8 +23,8 @@ export class ProjectsService {
       });
   }
 
-  addProject(title: number): void {
-    this.http.post<IResCreatedProject>(`${this.ROOT_URL}/projects`, { title }, {observe: 'response'})
+  addProject(title: number, newTodo: ITodoWithoutId): void {
+     this.http.post<IResCreatedProject>(`${this.ROOT_URL}/projects`, { title }, {observe: 'response'})
       .subscribe((res) => {
         if (res.status === 201 && res.body) {
           const createdProject = {
@@ -32,30 +32,35 @@ export class ProjectsService {
             title: res.body.title,
             todos: []
           }
+
           const updatedProjects: IProject[] = this.projects$.getValue();
           updatedProjects.push(createdProject);
 
           this.projects$.next(updatedProjects);
+
+          this.addTodo(createdProject.id, newTodo);
         }
       });
   }
 
-  addTodo(projectId: number, newTodo: ITodoWithoutId): void {
-    this.http.post<IResCreatedTodo>(`${this.ROOT_URL}/projects/${projectId}/todos`, newTodo, {observe: 'response'})
+  addTodo(projectId: number, newTodo: ITodoWithoutId) {
+
+    this.http.post<IResCreatedTodo>(`${this.ROOT_URL}/projects/${projectId}/todos`, newTodo, { observe: 'response' })
       .subscribe((res) => {
         if (res.status === 201 && res.body) {
-          const createdTodo = {...res.body};
+          const createdTodo = { ...res.body };
           const updatedProjects: IProject[] = this.projects$.getValue().map<IProject>((project: IProject) => {
             if (project.id === createdTodo.project_id) {
               const todo: ITodo = { ...createdTodo };
               project.todos.push(todo);
             }
-            return project
-          })
+            return project;
+          });
 
           this.projects$.next(updatedProjects);
 
         }
+
       });
   }
 

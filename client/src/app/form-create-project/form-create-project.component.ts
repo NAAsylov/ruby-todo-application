@@ -31,7 +31,7 @@ export class FormCreateProjectComponent implements OnInit {
   submitHandler() {
     try {
       const title = this.titleFormControl.value;
-      this.projectsService.addProject(title);
+      // this.projectsService.addProject(title);
       this.closeCreateDialog();
     } catch (e) {
       console.log(e);

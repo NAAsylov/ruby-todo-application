@@ -13,10 +13,18 @@
     <div>
       <mat-form-field appearance="outline">
         <mat-label>Категория</mat-label>
-        <mat-select formControlName="projectId" placeholder="Категория">
+        <mat-select formControlName="projectId" placeholder="Категория" (selectionChange)="selectChange($event.value)">
+          <mat-option value="-1">Новая</mat-option>
           <mat-option *ngFor="let project of projects" value="{{project.id}}">{{project.title}}</mat-option>
         </mat-select>
         <mat-error *ngIf="projectIdFormControl.invalid">{{getErrorMessage(projectIdFormControl)}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div *ngIf="createNewProject">
+      <mat-form-field appearance="outline">
+        <mat-label>Название новой категории</mat-label>
+        <input matInput placeholder="Название новой категории" formControlName="title" required>
+        <mat-error *ngIf="titleFormControl.invalid">{{getErrorMessage(titleFormControl)}}</mat-error>
       </mat-form-field>
     </div>
   </div>
