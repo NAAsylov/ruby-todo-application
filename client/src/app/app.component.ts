@@ -11,10 +11,14 @@ export class AppComponent {
   title = 'Angular Todo Application';
 
   projects: IProject[] = [];
+  loading: boolean = false;
 
   constructor(private projectsService: ProjectsService) {
     this.projectsService.projects$.subscribe((projects) => {
       this.projects = projects;
+    });
+    this.projectsService.loading$.subscribe((loading) => {
+      this.loading = loading;
     });
   }
 

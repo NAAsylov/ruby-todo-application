@@ -7,6 +7,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormCreateComponent } from './form-create/form-create.component';
+import { FormCreateProjectComponent } from './form-create-project/form-create-project.component';
 
 /* Angular Material Modules */
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -20,7 +21,8 @@ import { MatCardModule } from "@angular/material/card";
 import { MatListModule } from "@angular/material/list";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { TodoListComponent } from './todo-list/todo-list.component';
-import { FormCreateProjectComponent } from './form-create-project/form-create-project.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { FormCreateProjectComponent } from './form-create-project/form-create-pr
     MatCardModule,
     MatListModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

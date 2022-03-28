@@ -15,16 +15,22 @@ export class ProjectsService {
   }
 
   projects$ = new BehaviorSubject<IProject[]>([]);
+  loading$ = new BehaviorSubject<boolean>(false);
 
   loadProjects() {
+    this.loading$.next(true);
     this.http.get<IProject[]>(`${this.ROOT_URL}/projects`, {observe: 'response'})
       .subscribe((res) => {
-        if (res.status === 200 && res.body) this.projects$.next(res.body);
+        if (res.status === 200 && res.body) {
+          this.projects$.next(res.body);
+          this.loading$.next(false);
+        }
       });
   }
 
   addProject(title: number, newTodo: ITodoWithoutId): void {
-     this.http.post<IResCreatedProject>(`${this.ROOT_URL}/projects`, { title }, {observe: 'response'})
+    this.loading$.next(true);
+    this.http.post<IResCreatedProject>(`${this.ROOT_URL}/projects`, { title }, {observe: 'response'})
       .subscribe((res) => {
         if (res.status === 201 && res.body) {
           const createdProject = {
@@ -44,7 +50,7 @@ export class ProjectsService {
   }
 
   addTodo(projectId: number, newTodo: ITodoWithoutId) {
-
+    if (!this.loading$.getValue()) this.loading$.next(true);
     this.http.post<IResCreatedTodo>(`${this.ROOT_URL}/projects/${projectId}/todos`, newTodo, { observe: 'response' })
       .subscribe((res) => {
         if (res.status === 201 && res.body) {
@@ -58,6 +64,7 @@ export class ProjectsService {
           });
 
           this.projects$.next(updatedProjects);
+          this.loading$.next(false);
 
         }
 
